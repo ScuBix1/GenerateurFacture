@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Facture à générer{% endblock %}
+
+{% block body %}
+    <main>
+        <div class="grid w-[100%]">
+            <h1 class="text-[35px] text-center text-uppercase ">Facture</h1>
+            <div>
+                {{ form_start(formFacture) }}
+                    {% for field in formFacture %}
+                        {%  if form_label(field) != '<label for="facture__token">Token</label>' %}
+                        <div class="flex justify-around">
+                            {{ form_label(field) }}
+                            {{ form_widget(field) }}
+                            {{ form_errors(field) }}
+                        </div>
+                        {% endif %} 
+                    {% endfor %}
+                {{ form_end(formFacture) }}
+
+            </div>
+        </div>  
+        <div class="flex justify-around">
+            <div>
+                <h2>Freelance: </h2>
+                <ul>
+
+                </ul>
+            </div>
+            <div>
+                <h2>Client: </h2>
+                <ul>
+                    {% for client in clients %}
+                    <li>Nom de l'entreprise: <b>{{client.nomSociete}}</b></li>
+                    <li>Adresse: <b>{{client.adresse}}</b></li>
+                    <li>Téléphone: <b>{{client.telephone}}</b></li>
+                    <li>Email: <b>{{client.email}}</b></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description de la tâche</th>
+                        <th>Prix H.T</th>
+                        <th>Prix T.T.C</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </main>
+{% endblock %}
