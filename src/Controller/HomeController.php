@@ -20,8 +20,8 @@ class HomeController extends AbstractController{
         $clients = $repository->findAll();
         $facture = new Facture();
         $formFacture = $this->createForm(FactureType::class);
+        $formFacture->handleRequest($request);
         if($formFacture->isSubmitted() && $formFacture->isValid()){
-            $em->persist($facture);
             $em->flush();
             $this->addFlash('success', 'La facture est bien ajouté');
         }

@@ -1,6 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 body {
     background-color: skyblue;
+}
+h1{
+    text-align: center;
+}
+.div-form-flex > form{
+    display: flex;
+    justify-content: space-around;
 }

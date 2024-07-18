@@ -4,16 +4,15 @@
 
 {% block body %}
     <main>
-        <div class="grid w-[100%]">
-            <h1 class="text-[35px] text-center text-uppercase ">Facture</h1>
-            <div>
+        <div>
+            <h1>Facture</h1>
+            <div class="div-form-flex">
                 {{ form_start(formFacture) }}
                     {% for field in formFacture %}
                         {%  if form_label(field) != '<label for="facture__token">Token</label>' %}
-                        <div class="flex justify-around">
+                        <div >
                             {{ form_label(field) }}
                             {{ form_widget(field) }}
-                            {{ form_errors(field) }}
                         </div>
                         {% endif %} 
                     {% endfor %}
@@ -21,7 +20,7 @@
 
             </div>
         </div>  
-        <div class="flex justify-around">
+        <div >
             <div>
                 <h2>Freelance: </h2>
                 <ul>
