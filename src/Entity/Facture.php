@@ -53,7 +53,7 @@ class Facture
 
     public function setNumero(int $numero): static
     {
-        $this->numero = $numero;
+        $this->numero = (int) $numero;
 
         return $this;
     }
