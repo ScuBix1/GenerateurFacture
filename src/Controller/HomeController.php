@@ -12,12 +12,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\TacheType;
+use App\Repository\TacheRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class HomeController extends AbstractController{
     #[Route(path: "/", name: "home")]
-    function index(Request $request, ClientRepository $repository, EntityManagerInterface $em): Response{
-        $clients = $repository->findAll();
+    function index(Request $request, ClientRepository $clientRepository, TacheRepository $tacheRepository, EntityManagerInterface $em): Response{
+        $clients = $clientRepository->findAll();
+        $taches = $tacheRepository->findAll();
         $facture = new Facture();
         $formFacture = $this->createForm(FactureType::class, $facture);
         $formFacture->handleRequest($request);
@@ -28,6 +30,7 @@ class HomeController extends AbstractController{
         }
         return $this->render('home/index.html.twig', [
             "clients" => $clients,
+            'taches' => $taches,
             'facture' => $facture,
             'formFacture' => $formFacture,
         ]);

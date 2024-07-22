@@ -6,6 +6,7 @@
     <main>
         <div>
             <h1>Facture</h1>
+            {{ include('partials/flash.html.twig') }}
             <div class="div-form-flex">
                 {{ form_start(formFacture) }}
                     {% for field in formFacture %}
@@ -46,6 +47,16 @@
                         <th>Description de la tâche</th>
                         <th>Prix H.T</th>
                         <th>Prix T.T.C</th>
+                    </tr>
+                    {% for tache in taches %}
+                    <tr>
+                        <td>{{tache.description}}</td>
+                        <td>{{tache.prixHT}}</td>
+                        <td>{{tache.prixTTC}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                       <td><i class="fa-solid fa-plus"></i></td>
                     </tr>
                 </thead>
                 <tbody>
