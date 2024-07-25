@@ -5,13 +5,13 @@
 {% block body %}
     <main>
         <div>
-            <h1>Facture</h1>
+            <h1 class="text-4xl">Facture</h1>
             {{ include('partials/flash.html.twig') }}
-            <div class="div-form-flex">
+            <div>
                 {{ form_start(formFacture) }}
                     {% for field in formFacture %}
                         {%  if form_label(field) != '<label for="facture__token">Token</label>' %}
-                        <div >
+                        <div>
                             {{ form_label(field) }}
                             {{ form_widget(field) }}
                         </div>
@@ -21,15 +21,15 @@
 
             </div>
         </div>  
-        <div >
+        <div class="flex justify-around my-6">
             <div>
-                <h2>Freelance: </h2>
+                <h2 class="text-lg">Freelance: </h2>
                 <ul>
 
                 </ul>
             </div>
             <div>
-                <h2>Client: </h2>
+                <h2 class="text-lg">Client: </h2>
                 <ul>
                     {% for client in clients %}
                     <li>Nom de l'entreprise: <b>{{client.nomSociete}}</b></li>
@@ -41,27 +41,34 @@
             </div>
         </div>
         <div>
-            <table>
+            <table class="w-[60%] border border-2 ml-[20%] mr-[20%]">
                 <thead>
                     <tr>
                         <th>Description de la tâche</th>
+                        <th>Actions</th>
                         <th>Prix H.T</th>
                         <th>Prix T.T.C</th>
                     </tr>
+                </thead>
+                <tbody>
                     {% for tache in taches %}
                     <tr>
                         <td>{{tache.description}}</td>
-                        <td>{{tache.prixHT}}</td>
-                        <td>{{tache.prixTTC}}</td>
+                        <td class="flex justify-around">
+                            <a href="" class="w-[45%] relative text-center text-white px-4 py-2 cursor-pointer opacity-70 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] bg-gradient-to-t from-[#0000ff] to-[#0000aa] active:scale-95">Éditer</a>
+                            <a href="" class=" w-[45%] relative text-center text-white px-4 py-2 cursor-pointer opacity-70 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] bg-gradient-to-t from-[#ff0000] to-[#aa0000] active:scale-95">Supprimer</a>
+                        </td>
+                        <td class="text-center">{{tache.prixHT}}</td>
+                        <td class="text-center">{{tache.prixTTC}}</td>
                     </tr>
                     {% endfor %}
                     <tr>
-                       <td><i class="fa-solid fa-plus"></i></td>
+                       <td><a href="" class="text-center relative text-white px-4 py-2 cursor-pointer opacity-70 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] bg-gradient-to-t from-[#00dd00] to-[#006600] active:scale-95">Ajouter</i></a></td>
                     </tr>
-                </thead>
-                <tbody>
-
                 </tbody>
+                
+
+                
             </table>
         </div>
     </main>

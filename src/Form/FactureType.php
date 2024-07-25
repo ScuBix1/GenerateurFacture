@@ -40,6 +40,9 @@ class FactureType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Facture::class,
+            'attr' => [
+                'class' => 'flex justify-around my-6',
+            ],
         ]);
     }
 }

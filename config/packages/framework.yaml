@@ -9,6 +9,9 @@ framework:
     #esi: true
     #fragments: true
 
+    # Allows modifying the method with a hidden field
+    http_method_override: true
+
 when@test:
     framework:
         test: true
