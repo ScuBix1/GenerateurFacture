@@ -39,11 +39,13 @@ class HomeController extends AbstractController{
     #[Route(path: '/task/create', name: 'task.create')]
     public function create(Request $request, EntityManagerInterface $em){
         $tache = new Tache();
-        $form = $this->createForm(TacheType::class);
+        $form = $this->createForm(TacheType::class, $tache);
+        $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $em->persist($tache);
             $em->flush();
             $this->addFlash('success', 'La tâches est bien ajouté');
+            return $this->redirectToRoute('home');
         }
         return $this->render('task/create.html.twig', [
             'form' => $form,

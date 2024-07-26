@@ -7,7 +7,9 @@ use App\Entity\Tache;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TacheType extends AbstractType
@@ -22,9 +24,8 @@ class TacheType extends AbstractType
                 'class' => Facture::class,
                 'choice_label' => 'id',
             ])
-            ->add('descriptionTache', ChoiceType::class, [
-                'placeholder' => 'Choisir une tâche effectué',
-                'class' => Tache::class,
+            ->add('save', SubmitType::class, [
+                'label' => 'Ajouter',
             ])
         ;
     }
