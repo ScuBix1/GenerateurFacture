@@ -51,19 +51,20 @@ class HomeController extends AbstractController{
             'form' => $form,
         ]);
     }   
-    #[Route(path: '/task/{id}/edit', name: 'task.edit')]
+    #[Route(path: '/task/{id}/edit', name: 'task.edit', methods: ['GET', 'POST'])]
     public function editTask(Tache $tache, Request $request, EntityManagerInterface $em){
        $form = $this->createForm(TacheType::class, $tache);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $em->flush();
+            $this->addFlash('success', 'La tâche a bien été mis à jour');
             return $this->redirectToRoute('home');
         }
         return $this->render('task/edit.html.twig', [
             'form' => $form, 
         ]);
     }  
-    #[Route(path: '/task/{id}/delete', name: 'task.delete', methods: ['DELETE'])]
+    #[Route(path: '/task/{id}', name: 'task.delete', methods: ['DELETE'])]
     public function deleteTask(Tache $tache, EntityManagerInterface $em){
         $em->remove($tache);
         $em->flush();
