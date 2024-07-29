@@ -25,6 +25,9 @@ class FactureType extends AbstractType
             ->add('client', EntityType::class, [
                 'class' => Client::class,
                 'choice_label' => 'nomSociete',
+                'attr' => [
+                    'class' => 'select_client',
+                ],
             ])
             ->add('entreprise', EntityType::class, [
                 'class' => Entreprise::class,
@@ -41,7 +44,7 @@ class FactureType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Facture::class,
             'attr' => [
-                'class' => 'flex justify-around my-6',
+                'class' => 'flex flex-wrap justify-around my-6',
             ],
         ]);
     }
