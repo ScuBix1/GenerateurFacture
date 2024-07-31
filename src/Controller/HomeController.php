@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\Facture;
 use App\Entity\Tache;
+use App\Form\ClientType;
 use App\Form\FactureType;
 use App\Repository\ClientRepository;
 use App\Repository\FactureRepository;
@@ -50,6 +52,23 @@ class HomeController extends AbstractController{
             'telephone' => $client->getTelephone(),
             'email' => $client->getEmail()
         ]);
+    }
+    
+    #[Route(path: "/client/create", name: "client.create")]
+    function createClient(Request $request, EntityManagerInterface $em)
+    {
+            $client = new Client();
+            $form = $this->createForm(ClientType::class, $client);
+            $form->handleRequest($request);
+            if($form->isSubmitted() && $form->isValid()){
+                $em->persist($client);
+                $em->flush();
+                $this->addFlash('success', 'Le client est bien ajouté');
+                return $this->redirectToRoute('home');
+            }
+            return $this->render('client/create.html.twig', [
+                'form' => $form,
+            ]);
     }
 
     #[Route(path: "/entreprise-info/{id}", name: "entreprise.get")]

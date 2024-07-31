@@ -4,7 +4,9 @@ namespace App\Form;
 
 use App\Entity\Client;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ClientType extends AbstractType
@@ -16,6 +18,9 @@ class ClientType extends AbstractType
             ->add('adresse')
             ->add('telephone')
             ->add('email')
+            ->add('save', SubmitType::class, [
+                'label' => 'Ajouter',
+            ])
         ;
     }
 

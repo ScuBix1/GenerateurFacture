@@ -30,9 +30,6 @@ class FactureType extends AbstractType
                 'class' => Entreprise::class,
                 'choice_label' => 'nomSociete',
             ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Séléctionner',
-            ])
         ;
     }
 
