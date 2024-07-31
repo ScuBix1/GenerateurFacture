@@ -27,14 +27,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     document.getElementById('siren_entreprise').innerText = data.siren
                 })
                 .catch((error) => console.error('Erreur:', error))
-        }
+        }  
+
 
         let client = document.getElementById('facture_client')
+        let link = document.getElementById("edit_client")
         let selectedClient = client.value
         updateClientInfo(selectedClient)
         client.addEventListener('change', () => {
             selectedClient = client.value
             updateClientInfo(selectedClient)
+        })
+        link.addEventListener('click', (event)=>{
+            event.preventDefault()
+            window.location.href = `/client/${selectedClient}/edit`
         })
 
         let entreprise = document.getElementById('facture_entreprise')
