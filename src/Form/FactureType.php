@@ -25,9 +25,6 @@ class FactureType extends AbstractType
             ->add('client', EntityType::class, [
                 'class' => Client::class,
                 'choice_label' => 'nomSociete',
-                'attr' => [
-                    'class' => 'select_client',
-                ],
             ])
             ->add('entreprise', EntityType::class, [
                 'class' => Entreprise::class,

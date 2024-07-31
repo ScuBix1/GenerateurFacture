@@ -12,8 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\TacheType;
+use App\Repository\EntrepriseRepository;
 use App\Repository\TacheRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends AbstractController{
     #[Route(path: "/", name: "home")]
@@ -24,15 +26,47 @@ class HomeController extends AbstractController{
         $formFacture = $this->createForm(FactureType::class, $facture);
         $formFacture->handleRequest($request);
         if($formFacture->isSubmitted() && $formFacture->isValid()){
-            $em->persist($facture);
-            $em->flush();
-            $this->addFlash('success', 'La facture est bien ajouté');
         }
         return $this->render('home/index.html.twig', [
             "clients" => $clients,
             'taches' => $taches,
             'facture' => $facture,
             'formFacture' => $formFacture,
+        ]);
+    }
+
+    #[Route(path: "/client-info/{id}", name: "client.get")]
+    function getClient($id, ClientRepository $clientRepository):  JsonResponse
+    {
+        $client = $clientRepository->find($id);
+
+        if (!$client) {
+            return new JsonResponse(['error' => 'Client non trouvé'], 404);
+        }
+
+        return new JsonResponse([
+            'nom' => $client->getNomSociete(),
+            'adresse' => $client->getAdresse(),
+            'telephone' => $client->getTelephone(),
+            'email' => $client->getEmail()
+        ]);
+    }
+
+    #[Route(path: "/entreprise-info/{id}", name: "entreprise.get")]
+    function getEntreprise($id, EntrepriseRepository $entrepriseRepository):  JsonResponse
+    {
+        $entreprise = $entrepriseRepository->find($id);
+
+        if (!$entreprise) {
+            return new JsonResponse(['error' => 'Entreprise non trouvé'], 404);
+        }
+
+        return new JsonResponse([
+            'nom' => $entreprise->getNomSociete(),
+            'adresse' => $entreprise->getAdresse(),
+            'telephone' => $entreprise->getTelephone(),
+            'email' => $entreprise->getEmail(),
+            'siren' => $entreprise->getSiren(),
         ]);
     }
 
