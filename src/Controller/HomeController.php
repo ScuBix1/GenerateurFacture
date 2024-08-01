@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Entity\Entreprise;
 use App\Entity\Facture;
 use App\Entity\Tache;
 use App\Form\ClientType;
+use App\Form\EntrepriseType;
 use App\Form\FactureType;
 use App\Repository\ClientRepository;
 use App\Repository\FactureRepository;
@@ -87,11 +89,10 @@ class HomeController extends AbstractController
         ]);
     }
     #[Route(path: '/client/{id}/delete', name: 'client.delete', methods: ['DELETE'])]
-    public function clientTask(Client $client, EntityManagerInterface $em)
+    public function deleteClient(Client $client, EntityManagerInterface $em)
     {
         $em->remove($client);
         $em->flush();
-        $this->addFlash('success', 'Le client a bien été supprimé !');
         return $this->redirectToRoute('home');
     }
 
@@ -112,6 +113,44 @@ class HomeController extends AbstractController
             'siren' => $entreprise->getSiren(),
         ]);
     }
+    #[Route(path: "/entreprise/create", name: "entreprise.create")]
+    function createEntreprise(Request $request, EntityManagerInterface $em)
+    {
+        $entreprise = new Entreprise();
+        $form = $this->createForm(EntrepriseType::class, $entreprise);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($entreprise);
+            $em->flush();
+            $this->addFlash('success', 'L\'entreprise est bien ajouté');
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('entreprise/create.html.twig', [
+            'form' => $form,
+        ]);
+    }
+    #[Route(path: '/entreprise/{id}/edit', name: 'entreprise.edit', methods: ['GET', 'POST'])]
+    public function editEntreprise(Entreprise $entreprise, Request $request, EntityManagerInterface $em)
+    {
+        $form = $this->createForm(EntrepriseType::class, $entreprise);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            $this->addFlash('success', 'Les informations de votre entreprise ont bien été mis à jour');
+            return $this->redirectToRoute('home');
+        }
+        return $this->render('entreprise/edit.html.twig', [
+            'form' => $form,
+        ]);
+    }
+    #[Route(path: '/entreprise/{id}/delete', name: 'entreprise.delete', methods: ['DELETE'])]
+    public function deleteEntreprise(Entreprise $entreprise, EntityManagerInterface $em)
+    {
+        $em->remove($entreprise);
+        $em->flush();
+        return $this->redirectToRoute('home');
+    }
+
 
     #[Route(path: '/task/create', name: 'task.create')]
     public function create(Request $request, EntityManagerInterface $em)

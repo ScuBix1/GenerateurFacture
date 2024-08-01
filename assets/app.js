@@ -30,15 +30,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
 
         let client = document.getElementById('facture_client')
-        let deleteClientForm = document.forms['delete_client']
-        let link = document.getElementById('edit_client')
         let selectedClient = client.value
+        let deleteClientForm = document.forms['delete_client']
+        let editClient = document.getElementById('edit_client')
+
+        let entreprise = document.getElementById('facture_entreprise')
+        let selectedEntreprise = entreprise.value
+        let deleteEntrepriseForm = document.forms['delete_entreprise']
+        let editEntreprise = document.getElementById('edit_entreprise')
+        
         updateClientInfo(selectedClient)
         client.addEventListener('change', () => {
             selectedClient = client.value
             updateClientInfo(selectedClient)
         })
-        link.addEventListener('click', (event) => {
+        editClient.addEventListener('click', (event) => {
             event.preventDefault()
             window.location.href = `/client/${selectedClient}/edit`
         })
@@ -54,35 +60,33 @@ document.addEventListener('DOMContentLoaded', (event) => {
             }).then((response) => {
                 if (response.status === 200) {
                     window.location.href = '/'
-                    deleteClientForm.addEventListener('submit', (event) => {
-                        event.preventDefault()
-                        const url = `/client/${selectedClient}/delete`
-                        fetch(url, {
-                            method: 'DELETE',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-Requested-With': 'XMLHttpRequest',
-                            },
-                        }).then((response) => {
-                            if (response.status === 200) {
-                                window.location.href = '/'
-                            } else {
-                                console.error('Erreur lors de la suppression')
-                            }
-                        })
-                    })
-                } else {
-                    console.error('Erreur lors de la suppression')
                 }
-            })
+            }).catch((err)=>console.log(err))
         })
 
-        let entreprise = document.getElementById('facture_entreprise')
-        let selectedEntreprise = entreprise.value
         updateEntrepriseInfo(selectedEntreprise)
         entreprise.addEventListener('change', () => {
             selectedEntreprise = entreprise.value
-            updateClientInfo(selectedEntreprise)
+            updateEntrepriseInfo(selectedEntreprise)
+        })
+        editEntreprise.addEventListener('click', (event) => {
+            event.preventDefault()
+            window.location.href = `/entreprise/${selectedEntreprise}/edit`
+        })
+        deleteEntrepriseForm.addEventListener('submit', (event) => {
+            event.preventDefault()
+            const url = `/entreprise/${selectedEntreprise}/delete`
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            }).then((response) => {
+                if (response.ok) {
+                    window.location.href = '/'
+                }
+            }).catch((err)=>console.log(err))
         })
     }
 })
