@@ -86,7 +86,7 @@ class HomeController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route(path: '/client/{id}', name: 'client.delete', methods: ['DELETE'])]
+    #[Route(path: '/client/{id}/delete', name: 'client.delete', methods: ['DELETE'])]
     public function clientTask(Client $client, EntityManagerInterface $em)
     {
         $em->remove($client);
@@ -143,7 +143,7 @@ class HomeController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route(path: '/task/{id}', name: 'task.delete', methods: ['DELETE'])]
+    #[Route(path: '/task/{id}/delete', name: 'task.delete', methods: ['DELETE'])]
     public function deleteTask(Tache $tache, EntityManagerInterface $em)
     {
         $em->remove($tache);

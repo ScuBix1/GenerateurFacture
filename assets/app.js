@@ -27,20 +27,54 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     document.getElementById('siren_entreprise').innerText = data.siren
                 })
                 .catch((error) => console.error('Erreur:', error))
-        }  
-
+        }
 
         let client = document.getElementById('facture_client')
-        let link = document.getElementById("edit_client")
+        let deleteClientForm = document.forms['delete_client']
+        let link = document.getElementById('edit_client')
         let selectedClient = client.value
         updateClientInfo(selectedClient)
         client.addEventListener('change', () => {
             selectedClient = client.value
             updateClientInfo(selectedClient)
         })
-        link.addEventListener('click', (event)=>{
+        link.addEventListener('click', (event) => {
             event.preventDefault()
             window.location.href = `/client/${selectedClient}/edit`
+        })
+        deleteClientForm.addEventListener('submit', (event) => {
+            event.preventDefault()
+            const url = `/client/${selectedClient}/delete`
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            }).then((response) => {
+                if (response.status === 200) {
+                    window.location.href = '/'
+                    deleteClientForm.addEventListener('submit', (event) => {
+                        event.preventDefault()
+                        const url = `/client/${selectedClient}/delete`
+                        fetch(url, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-Requested-With': 'XMLHttpRequest',
+                            },
+                        }).then((response) => {
+                            if (response.status === 200) {
+                                window.location.href = '/'
+                            } else {
+                                console.error('Erreur lors de la suppression')
+                            }
+                        })
+                    })
+                } else {
+                    console.error('Erreur lors de la suppression')
+                }
+            })
         })
 
         let entreprise = document.getElementById('facture_entreprise')

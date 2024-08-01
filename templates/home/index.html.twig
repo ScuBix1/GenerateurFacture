@@ -22,10 +22,7 @@
 
 			</div>
 		</div>
-        <div>
-            <a href="{{ path('client.create') }}" class="text-center relative text-white px-4 py-2 cursor-pointer opacity-70 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] bg-gradient-to-t from-[#00dd00] to-[#006600] active:scale-95">Ajouter un client</a>
-            <a href="#"  id="edit_client" class="w-[45%] relative text-center text-white px-4 py-2 cursor-pointer opacity-70 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] bg-gradient-to-t from-[#0000ff] to-[#0000aa] active:scale-95">Éditer</a>
-        </div>
+
 		<div class="flex justify-around my-6">
 			<div>
 				<h2 class="text-lg">Freelance:
@@ -65,6 +62,14 @@
 						<b id="email_client"></b>
 					</li>
 				</ul>
+				<div class="grid my-4 gap-4">
+					<a href="{{ path('client.create') }}" class="text-center relative text-white px-4 py-2 cursor-pointer opacity-70 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] bg-gradient-to-t from-[#00dd00] to-[#006600] active:scale-95">Ajouter un client</a>
+					<a href="#" id="edit_client" class="relative text-center text-white px-4 py-2 cursor-pointer opacity-70 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] bg-gradient-to-t from-[#0000ff] to-[#0000aa] active:scale-95">Éditer</a>
+					<form class="text-center relative text-center text-white px-4 py-2 cursor-pointer opacity-70 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] bg-gradient-to-t from-[#ff0000] to-[#aa0000] active:scale-95" action="" method="POST" name="delete_client">
+						<input type="hidden" name="_method" value="DELETE">
+						<button type="submit" class="  ">Supprimer</button>
+					</form>
+				</div>
 			</div>
 		</div>
 		<div>
