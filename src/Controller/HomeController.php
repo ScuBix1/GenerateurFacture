@@ -32,6 +32,7 @@ class HomeController extends AbstractController
         $formFacture = $this->createForm(FactureType::class, $facture);
         $formFacture->handleRequest($request);
         if ($formFacture->isSubmitted() && $formFacture->isValid()) {
+            
         }
         return $this->render('home/index.html.twig', [
             "clients" => $clients,
