@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use App\Form\TacheType;
 use App\Repository\EntrepriseRepository;
 use App\Repository\TacheRepository;
+use App\Service\PdfGeneratorService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -32,7 +33,7 @@ class HomeController extends AbstractController
         $formFacture = $this->createForm(FactureType::class, $facture);
         $formFacture->handleRequest($request);
         if ($formFacture->isSubmitted() && $formFacture->isValid()) {
-            
+
         }
         return $this->render('home/index.html.twig', [
             "clients" => $clients,
@@ -190,5 +191,16 @@ class HomeController extends AbstractController
         $em->flush();
         $this->addFlash('success', 'La tâche a bien été supprimé !');
         return $this->redirectToRoute('home');
+    }
+    #[Route(path: '/pdf-output', name: 'pdf.create')]
+    public function output(PdfGeneratorService $pdfGeneratorService, ClientRepository $clientRepository): Response{
+        $clients = $clientRepository->findAll();
+        $html = $this->renderView('home/pdf.html.twig',[
+            'clients' => $clients
+        ]);
+        $content = $pdfGeneratorService->getPdf($html);
+        return new Response($content, 200, [
+            'Content-Type' => 'application/pdf'
+        ]);
     }
 }

@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <style>
+            h1{
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Facture</h1>
+        {% for client in clients %}
+            <p>{{client.nomSociete}}</p>
+        {% endfor %}
+    </body>
+</html>
