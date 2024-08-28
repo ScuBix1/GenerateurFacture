@@ -4,12 +4,81 @@
             h1{
                 text-align: center;
             }
+            #info-bar{
+                width: 100%;
+                position: relative;
+                height: 230px;
+            }
+            #info-bar div{
+                width: 45%;
+                position: absolute;
+            }
+            #freelance{
+                left: 0;
+            }
+            #client{
+                left: 55%;
+            }
         </style>
     </head>
     <body>
         <h1>Facture</h1>
-        {% for client in clients %}
-            <p>{{client.nomSociete}}</p>
-        {% endfor %}
+        <div id="info-bar">
+            <div id="freelance">
+				<h2>Freelance:</h2>
+				<ul>
+					<li>Nom de l'entreprise:
+						<b id="nomSociete_entreprise">{{entreprise.nomSociete}}</b>
+					</li>
+					<li>Adresse:
+						<b id="adresse_entreprise">{{entreprise.adresse}}</b>
+					</li>
+					<li>Téléphone:
+						<b id="telephone_entreprise">{{entreprise.telephone}}</b>
+					</li>
+					<li>Email:
+						<b id="email_entreprise">{{entreprise.email}}</b>
+					</li>
+					<li>Siren:
+						<b id="siren_entreprise">{{entreprise.siren}}</b>
+					</li>
+				</ul>
+			</div>
+			<div id="client">
+				<h2>Client:</h2>
+				<ul>
+					<li>Nom de l'entreprise:
+						<b id="nomSociete_client">{{client.nomSociete}}</b>
+					</li>
+					<li>Adresse:
+						<b id="adresse_client">{{client.adresse}}</b>
+					</li>
+					<li>Téléphone:
+						<b id="telephone_client">{{client.telephone}}</b>
+					</li>
+					<li>Email:
+						<b id="email_client">{{client.email}}</b>
+					</li>
+				</ul>
+			</div>
+        </div>
+        <table class="w-[60%] border border-2 ml-[20%] mr-[20%]">
+			<thead>
+				<tr>
+					<th>Description de la tâche</th>
+					<th>Prix H.T</th>
+					<th>Prix T.T.C</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for tache in taches %}
+					<tr>
+						<td>{{tache.description}}</td>
+						<td class="text-center">{{tache.prixHT}}</td>
+						<td class="text-center">{{tache.prixTTC}}</td>
+					</tr>
+				{% endfor %}
+            </tbody>
+        </table>
     </body>
 </html>

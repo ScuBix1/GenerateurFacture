@@ -192,11 +192,15 @@ class HomeController extends AbstractController
         $this->addFlash('success', 'La tâche a bien été supprimé !');
         return $this->redirectToRoute('home');
     }
-    #[Route(path: '/pdf-output', name: 'pdf.create')]
-    public function output(PdfGeneratorService $pdfGeneratorService, ClientRepository $clientRepository): Response{
-        $clients = $clientRepository->findAll();
+    #[Route(path: '/pdf-output/{clientId}/{entrepriseId}', name: 'pdf.create')]
+    public function output($clientId, $entrepriseId, PdfGeneratorService $pdfGeneratorService, ClientRepository $clientRepository, EntrepriseRepository $entrepriseRepository, TacheRepository $tacheRepository): Response{
+        $entreprise = $entrepriseRepository->find($entrepriseId);
+        $client = $clientRepository->find($clientId);  
+        $taches = $tacheRepository->findAll();
         $html = $this->renderView('home/pdf.html.twig',[
-            'clients' => $clients
+            'client' => $client,
+            'entreprise' => $entreprise,
+            'taches' => $taches
         ]);
         $content = $pdfGeneratorService->getPdf($html);
         return new Response($content, 200, [

@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 .catch((error) => console.error('Erreur:', error))
         }
         //fonction pour accéder et afficher les infos de son entreprise selectionné en temps réel
-        function updateEntrepriseInfo(clientId) {
-            fetch(`/entreprise-info/${clientId}`)
+        function updateEntrepriseInfo(entrepriseId) {
+            fetch(`/entreprise-info/${entrepriseId}`)
                 .then((response) => response.json())
                 .then((data) => {
                     document.getElementById('nomSociete_entreprise').innerText = data.nom
@@ -38,6 +38,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
         let selectedEntreprise = entreprise.value
         let deleteEntrepriseForm = document.forms['delete_entreprise']
         let editEntreprise = document.getElementById('edit_entreprise')
+
+        let printButton = document.getElementById("facture_save")
+
+        
         
         updateClientInfo(selectedClient)
         client.addEventListener('change', () => {
@@ -88,5 +92,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }
             }).catch((err)=>console.log(err))
         })
+        
+
     }
 })
