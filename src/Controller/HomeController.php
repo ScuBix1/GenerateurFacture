@@ -33,7 +33,12 @@ class HomeController extends AbstractController
         $formFacture = $this->createForm(FactureType::class, $facture);
         $formFacture->handleRequest($request);
         if ($formFacture->isSubmitted() && $formFacture->isValid()) {
-
+            $em->persist($facture);
+            $em->flush();
+            return $this->redirectToRoute('pdf.create',[
+                'clientId' => $_POST['facture']['client'], 
+                'entrepriseId' => $_POST['facture']['entreprise']
+            ]);
         }
         return $this->render('home/index.html.twig', [
             "clients" => $clients,
